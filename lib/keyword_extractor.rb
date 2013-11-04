@@ -1,6 +1,6 @@
 require 'keyword_extractor/keyword'
-require 'keyword_extractor/keywords'
 require 'keyword_extractor/document'
+require 'keyword_extractor/tfidf'
 
 # TODO
 # * support for a list of stop words

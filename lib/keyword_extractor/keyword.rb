@@ -1,13 +1,15 @@
 module KeywordExtractor
   class Keyword
-    attr_accessible :word, :rank
+    attr_accessor :word, :rank
+
+    include Comparable
 
     def initialize(word, rank)
       @word, @rank = word, rank
     end
 
     def <=>(k)
-      @rank <=> k.rank 
+      (@rank <=> k.rank) * -1
     end
 
     def to_s

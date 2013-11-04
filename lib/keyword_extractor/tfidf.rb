@@ -22,7 +22,7 @@ module KeywordExtractor
 
         # now finish by calculating all of the inverse term frequencies and assign ranks
         word_document_counts.each do |word, document_count|
-          idf[word] = inverse_document_frequency(word, @corpus.size, document_count
+          idf[word] = inverse_document_frequency(word, @corpus.size, document_count)
         end
 
         tf_idf(tf, idf)
@@ -31,14 +31,9 @@ module KeywordExtractor
 
       def tf_idf(tf, idf)
         results = {}
+
         tf.each do |document_id, keywords|
-          results[document.id] = []
-
-          keywords.each do |keyword, tf|
-            results[document.id] << Keyword.new(keyword, tf * idf[keyword])
-          end
-
-          results[document.id].sort!
+          results[document.id] = keywords.collect {|k, tf| Keyword.new(k, tf * idf[k])}.sort
         end
 
         results

@@ -2,7 +2,7 @@ require 'securerandom'
 
 module KeywordExtractor
   class Document
-    attr_accessible :text, :id
+    attr_accessor :text, :id
 
     def initialize(text=nil)
       @id = SecureRandom.uuid

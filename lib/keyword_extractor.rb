@@ -15,6 +15,6 @@ module KeywordExtractor
       raise "The text argument should either be a String or an Array"
     end
 
-    TFIDF.new(text.map {|t| Document.new(t)})
+    TFIDF.analyze(text.map {|t| Document.new(t)})
   end
 end

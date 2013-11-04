@@ -3,8 +3,7 @@ module KeywordExtractor
     attr_accessible :word, :rank
 
     def initialize(word, rank)
-      @word = word
-      @rank = rank
+      @word, @rank = word, rank
     end
 
     def <=>(k)

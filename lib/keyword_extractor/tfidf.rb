@@ -40,7 +40,6 @@ module KeywordExtractor
       end
 
 
-      # TODO make the various term frequency strategies below pluggable/configurable
       def term_frequency(term, document)
         document.frequency(term)
       end
@@ -59,7 +58,7 @@ module KeywordExtractor
 
 
       def inverse_document_frequency(term, corpus_size, document_count)
-        Math.log(corpus_size / (1 + document_count))
+        Math.log(corpus_size.to_f / (1 + document_count))
       end
     end
   end

@@ -5,6 +5,7 @@ require 'keyword_extractor/tfidf'
 # TODO
 # * support for a list of stop words
 # * should be able to extract keywords from on a corpus level and also across all of the corpuses
+# * make the various term frequency strategies pluggable/configurable
 module KeywordExtractor
   VERSION = '0.0.1'
 

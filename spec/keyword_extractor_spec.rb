@@ -12,6 +12,7 @@ describe KeywordExtractor do
 
   describe 'extract_keywords' do
     subject { KeywordExtractor.extract_keywords(documents) }
-    it { puts subject } 
+    it { should_not be_nil } 
+    its(:length) { should == 6 } 
   end
 end

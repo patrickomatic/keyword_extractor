@@ -1,8 +1,7 @@
 module KeywordExtractor
   module TFIDF
     class << self
-      # XXX should this take a limit which restricts the amount of results?
-      def analyze(corpus)
+      def analyze(corpus, term_frequency_strategy)
         tf, idf, word_document_counts = {}, {}, {}
 
         # calculate the term frequencies for each word and keep a count of how many documents
@@ -12,7 +11,18 @@ module KeywordExtractor
 
           document.tokenized_words.each do |word|
             unless tf[document.id].has_key?(word)
-              tf[document.id][word] = term_frequency(word, document) 
+              tf[document.id][word] = case term_frequency_strategy
+                                        when :count
+                                          term_frequency(word, document) 
+                                        when :boolean
+                                          boolean_term_frequency(word, document) 
+                                        when :logarithmic
+                                          logarithmic_term_frequency(word, document) 
+                                        when :augmented
+                                          augmented_term_frequency(word, document) 
+                                        else
+                                          raise "Uknown term frequency strategy: #{term_frequency_strategy}"
+                                        end
 
               word_document_counts[word] ||= 0
               word_document_counts[word] += 1
@@ -30,13 +40,7 @@ module KeywordExtractor
 
 
       def tf_idf(tf, idf)
-        results = {}
-
-        tf.each do |document_id, keywords|
-          results[document_id] = keywords.collect {|k, tf| Keyword.new(k, tf * idf[k])}.sort
-        end
-
-        results
+        Hash[tf.map {|doc_id, keywords| [doc_id, keywords.map {|k, tf| Keyword.new(k, tf * idf[k])}.sort]}]
       end
 
 

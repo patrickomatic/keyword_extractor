@@ -2,12 +2,16 @@ require 'keyword_extractor/keyword'
 require 'keyword_extractor/document'
 require 'keyword_extractor/tfidf'
 require 'keyword_extractor/stopwords'
+require 'keyword_extractor/configuration'
 
-# TODO
-# * should be able to extract keywords from on a corpus level and also across all of the corpuses
-# * make the various term frequency strategies pluggable/configurable
 module KeywordExtractor
   VERSION = '0.0.1'
+
+  @@configuration = Configuration.new
+
+  def self.configure
+    yield @@configuration
+  end
 
   def self.extract_keywords(text)
     if text.instance_of? String
@@ -16,8 +20,9 @@ module KeywordExtractor
       raise "The text argument should either be a String or an Array"
     end
 
-    stopwords = Stopwords.new('stopwords/english.txt')
+    stopwords = Stopwords.new(@@configuration.stopwords_file)
+    documents = text.map {|t| Document.new(t, stopwords)}
 
-    TFIDF.analyze(text.map {|t| Document.new(t, stopwords)})
+    Hash[TFIDF.analyze(documents, @@configuration.term_frequency_strategy).map {|doc_id, keywords| [documents.detect {|d| d.id == doc_id}, keywords]}]
   end
 end

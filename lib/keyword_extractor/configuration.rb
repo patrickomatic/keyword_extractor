@@ -8,7 +8,7 @@ module KeywordExtractor
     end
 
     def stopwords_file=(file)
-      raise "No such file: #{file}" unless File.exists?(file)
+      raise "No such file: #{file}" if !file.nil? && !File.exists?(file)
 
       @stopwords_file = file
     end

@@ -20,7 +20,7 @@ module KeywordExtractor
       raise "The text argument should either be a String or an Array"
     end
 
-    stopwords = Stopwords.new(@@configuration.stopwords_file)
+    stopwords = Stopwords.new(@@configuration.stopwords_file) unless @@configuration.stopwords_file.nil?
     documents = text.map {|t| Document.new(t, stopwords)}
 
     Hash[TFIDF.analyze(documents, @@configuration.term_frequency_strategy).map {|doc_id, keywords| [documents.detect {|d| d.id == doc_id}, keywords]}]

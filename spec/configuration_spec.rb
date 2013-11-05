@@ -22,6 +22,11 @@ describe KeywordExtractor::Configuration do
       let(:file) { "foo.txt" }
       specify { expect { subject }.to raise_error }
     end
+
+    context "with nil" do
+      let(:file) { nil }
+      it { should be_nil }
+    end
   end
 
 

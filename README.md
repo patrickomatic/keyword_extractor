@@ -14,7 +14,7 @@ Usage
 		'To further distinguish them, we might count the number of times each term occurs in each document and sum them all together; the number of times a term occurs in a document is called its term frequency.',
 	]
 
-	> KeywordExtractor.extract\_keywords(documents)
+	> KeywordExtractor.extract_keywords(documents)
 
 
 Configuration

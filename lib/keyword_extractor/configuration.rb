@@ -3,7 +3,7 @@ module KeywordExtractor
     attr_reader :term_frequency_strategy, :stopwords_file
 
     def initialize
-      @term_frequency_strategy = :count
+      @term_frequency_strategy = :augmented
       @stopwords_file = 'stopwords/english.txt'
     end
 

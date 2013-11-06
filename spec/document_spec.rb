@@ -13,7 +13,12 @@ describe KeywordExtractor::Document do
 
   describe "tokenized_words" do
     subject { document.tokenized_words }
-    it { should == ['this', 'is', 'a', 'document'] }
+    it { should == %w{this is a document} }
+
+    context "with various punctuation" do
+      let(:text) { 'The; query, is "the brown cow".' }
+      it { should == %w{the query is the brown cow} }
+    end
   end
 
 

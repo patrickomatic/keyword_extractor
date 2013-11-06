@@ -12,7 +12,7 @@ module KeywordExtractor
 
 
     def tokenized_words(pattern=/\s+/)
-      @tokenized_words ||= @text.downcase.split(pattern).reject {|word| !@stopwords.nil? && @stopwords.include?(word)}
+      @tokenized_words ||= @text.downcase.gsub(/[^a-z\s]+/, '').split(pattern).reject {|word| !@stopwords.nil? && @stopwords.include?(word)}
     end
 
     def most_common_word_frequency

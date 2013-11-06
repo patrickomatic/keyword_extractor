@@ -5,12 +5,12 @@ require 'keyword_extractor/stopwords'
 require 'keyword_extractor/configuration'
 
 module KeywordExtractor
-  VERSION = '0.0.1'
-
-  @@configuration = Configuration.new
+  def self.configuration
+    @@configuration ||= Configuration.new
+  end
 
   def self.configure
-    yield @@configuration
+    yield configuration
   end
 
   def self.extract_keywords(text)
@@ -20,9 +20,9 @@ module KeywordExtractor
       raise "The text argument should either be a String or an Array"
     end
 
-    stopwords = Stopwords.new(@@configuration.stopwords_file) unless @@configuration.stopwords_file.nil?
+    stopwords = Stopwords.new(configuration.stopwords_file) unless configuration.stopwords_file.nil?
     documents = text.map {|t| Document.new(t, stopwords)}
 
-    Hash[TFIDF.analyze(documents, @@configuration.term_frequency_strategy).map {|doc_id, keywords| [documents.detect {|d| d.id == doc_id}, keywords]}]
+    Hash[TFIDF.analyze(documents, configuration.term_frequency_strategy).map {|doc_id, keywords| [documents.detect {|d| d.id == doc_id}, keywords]}]
   end
 end

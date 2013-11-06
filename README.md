@@ -8,13 +8,13 @@ TF/IDF algorithm ([http://en.wikipedia.org/wiki/Tf-idf](http://en.wikipedia.org/
 Usage
 =================
   
-  > documents = [
-      'Suppose we have a set of English text documents and wish to determine which document is most relevant to the query "the brown cow".',
-      'A simple way to start out is by eliminating documents that do not contain all three words "the", "brown", and "cow", but this still leaves many documents.',
-      'To further distinguish them, we might count the number of times each term occurs in each document and sum them all together; the number of times a term occurs in a document is called its term frequency.',
-    ]
+	> documents = [
+		'Suppose we have a set of English text documents and wish to determine which document is most relevant to the query "the brown cow".',
+		'A simple way to start out is by eliminating documents that do not contain all three words "the", "brown", and "cow", but this still leaves many documents.',
+		'To further distinguish them, we might count the number of times each term occurs in each document and sum them all together; the number of times a term occurs in a document is called its term frequency.',
+	]
 
-  > KeywordExtractor.extract\_keywords(documents)
+	> KeywordExtractor.extract\_keywords(documents)
 
 
 Configuration
@@ -22,10 +22,10 @@ Configuration
 
 The two options which can be configured are `term_frequency_strategy` and `stopwords_file`:
 
-  KeywordExtractor.configure do |config|
-    config.term_frequency_strategy = :count
-	config.stopwords_file = '/path/to/my/stopwords.txt'
-  end
+	KeywordExtractor.configure do |config|
+		config.term_frequency_strategy = :count
+		config.stopwords_file = '/path/to/my/stopwords.txt'
+	end
 
 The supported options for these config paramters are:
 

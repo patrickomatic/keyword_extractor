@@ -41,7 +41,7 @@ module KeywordExtractor
 
       def tf_idf(tf, idf)
         Hash[tf.map {|doc_id, keywords| [doc_id, keywords.map {|k, tf| Keyword.new(k, tf * idf[k])}.sort]}]
-      end
+        end
 
 
       def term_frequency(term, document)

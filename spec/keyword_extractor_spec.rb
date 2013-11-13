@@ -10,6 +10,14 @@ describe KeywordExtractor do
       'this is the last post' ] 
   end
 
+
+  describe 'extract_top_keywords' do
+    subject { KeywordExtractor.extract_top_keywords(documents, 3) }
+
+    its(:length) { should == 3 }
+  end
+
+
   describe 'extract_keywords' do
     subject { KeywordExtractor.extract_keywords(documents) }
 

@@ -1,7 +1,7 @@
 module KeywordExtractor
   module TFIDF
     class << self
-      def analyze(corpus, term_frequency_strategy)
+      def analyze(corpus, term_frequency_strategy=:count)
         tf, idf, word_document_counts = {}, {}, {}
 
         # calculate the term frequencies for each word and keep a count of how many documents
@@ -41,7 +41,7 @@ module KeywordExtractor
 
       def tf_idf(tf, idf)
         Hash[tf.map {|doc_id, keywords| [doc_id, keywords.map {|k, tf| Keyword.new(k, tf * idf[k])}.sort]}]
-        end
+      end
 
 
       def term_frequency(term, document)

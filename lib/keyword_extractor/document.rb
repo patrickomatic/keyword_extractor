@@ -4,17 +4,29 @@ module KeywordExtractor
   class Document
     attr_accessor :text, :id
 
-    def initialize(text=nil, stopwords=nil, minimum_word_size=nil)
+    def initialize(text=nil, stopwords=nil, minimum_word_size=nil, reject=nil)
       @id = SecureRandom.uuid
       @text = text
       @minimum_word_size = minimum_word_size
       @stopwords = stopwords
+
+      @reject = case reject
+                when String
+                  lambda {|w| w == reject}
+                when Array
+                  lambda {|w| reject.include? w}
+                when Proc
+                  reject
+                else
+                  lambda {|w| false}
+                end
     end
 
 
     def tokenized_words(pattern=/\s+/)
       @tokenized_words ||= @text.downcase.gsub(/[^a-z\s]+/, '')
                             .split(pattern)
+                            .reject(&@reject)
                             .reject {|word| !@minimum_word_size.nil? && word.size < @minimum_word_size }
                             .reject {|word| !@stopwords.nil? && @stopwords.include?(word)}
     end

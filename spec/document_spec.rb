@@ -3,7 +3,8 @@ require 'spec_helper'
 describe KeywordExtractor::Document do
   let(:text) { "this is a document" }
   let(:minimum_word_size) { nil } 
-  let(:document) { KeywordExtractor::Document.new(text, nil, minimum_word_size) }
+  let(:reject) { nil } 
+  let(:document) { KeywordExtractor::Document.new(text, nil, minimum_word_size, reject) }
 
 
   describe "id" do
@@ -27,6 +28,67 @@ describe KeywordExtractor::Document do
 
       it { should == [] }
     end
+
+    context "with a reject String" do
+      let(:reject) { 'this' }
+      let(:text) { "this is a thing" }
+
+      it { should = %w{thing} }
+    end
+
+    context "with a reject Array" do
+      let(:reject) { ['this'] }
+      let(:text) { "this is a thing" }
+
+      it { should = %w{thing} }
+    end
+
+    context "with a reject Proc" do
+      let(:reject) { lambda {|word| word =~ /^http:\/\//} }
+      let(:text) { "http://bit.ly/asdf this is a thing" }
+
+      it { should = %w{this thing} }
+    end
+  end
+
+
+  describe "most_common_word_frequency" do
+    subject { document.most_common_word_frequency }
+
+    it { should == 1 }
+
+    context "with a repeating word" do
+      let(:text) { "this is is is a document" }
+      it { should == 3 }
+    end
+  end
+
+
+  describe "frequency" do
+    subject { document.frequency('document') }
+
+    it { should == 1 }
+
+  end
+
+
+  describe "most_common_word_frequency" do
+    subject { document.most_common_word_frequency }
+
+    it { should == 1 }
+
+    context "with a repeating word" do
+      let(:text) { "this is is is a document" }
+      it { should == 3 }
+    end
+  end
+
+
+  describe "frequency" do
+    subject { document.frequency('document') }
+
+    it { should == 1 }
+
   end
 
 

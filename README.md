@@ -25,6 +25,8 @@ The two options which can be configured are `term_frequency_strategy` and `stopw
 	KeywordExtractor.configure do |config|
 		config.term_frequency_strategy = :count
 		config.stopwords_file = '/path/to/my/stopwords.txt'
+    config.minimum_word_size = 4
+    config.reject = lambda {|word| word =~ /^https?:\/\//}
 	end
 
 The supported options for these config paramters are:
@@ -34,3 +36,5 @@ The supported options for these config paramters are:
   * `stopwords_file` - The path to a file containing a list of custom [stopwords](http://en.wikipedia.org/wiki/Stopwords).  If set to nil, no stopwords file will be used.  The file provided should be plain text and have one stopword per line.
 
   * `minimum_word_size` - The minimum length of a keyword.  All keywords with fewer characters than this value will be rejected.  Default value is 4.
+
+  * `reject` - A String, Array or Proc which can filter words to not be considered.

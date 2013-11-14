@@ -54,4 +54,37 @@ describe KeywordExtractor::Configuration do
       specify { expect { subject }.to raise_error }
     end
   end
+
+
+  describe "reject=" do
+    let(:reject) { 'string' }
+    subject { configuration.reject = reject }
+
+    it { should == reject }
+
+    context "with an invalid reject" do
+      let(:reject) { 1.0 }
+      specify { expect { subject }.to raise_error }
+    end
+
+    context "with a String" do
+      let(:reject) { 'reject' }
+      it { should == reject }
+    end
+
+    context "with an Array" do
+      let(:reject) { ['reject'] }
+      it { should == reject }
+    end
+
+    context "with a Proc" do
+      let(:reject) { lambda {|x| false} }
+      it { should == reject }
+    end
+
+    context "with an invalid reject" do
+      let(:reject) { 1.0 }
+      specify { expect { subject }.to raise_error }
+    end
+  end
 end

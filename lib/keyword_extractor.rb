@@ -41,12 +41,12 @@ module KeywordExtractor
       if text.first.include? '.'
         text = text.first.split('.')
       else
-        document = Document.new(text.first, stopwords, configuration.minimum_word_size)
+        document = Document.new(text.first, stopwords, configuration.minimum_word_size, configuration.reject)
         return {document => document.tokenized_words.collect {|word| Keyword.new(word, 0.0)}}
       end
     end
 
-    documents = text.map {|t| Document.new(t, stopwords, configuration.minimum_word_size)}
+    documents = text.map {|t| Document.new(t, stopwords, configuration.minimum_word_size, configuration.reject)}
 
     Hash[TFIDF.analyze(documents, configuration.term_frequency_strategy).map {|doc_id, keywords| [documents.detect {|d| d.id == doc_id}, keywords]}]
   end

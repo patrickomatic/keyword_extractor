@@ -4,15 +4,19 @@ module KeywordExtractor
   class Document
     attr_accessor :text, :id
 
-    def initialize(text=nil, stopwords=nil)
+    def initialize(text=nil, stopwords=nil, minimum_word_size=nil)
       @id = SecureRandom.uuid
       @text = text
+      @minimum_word_size = minimum_word_size
       @stopwords = stopwords
     end
 
 
     def tokenized_words(pattern=/\s+/)
-      @tokenized_words ||= @text.downcase.gsub(/[^a-z\s]+/, '').split(pattern).reject {|word| !@stopwords.nil? && @stopwords.include?(word)}
+      @tokenized_words ||= @text.downcase.gsub(/[^a-z\s]+/, '')
+                            .split(pattern)
+                            .reject {|word| !@minimum_word_size.nil? && word.size < @minimum_word_size }
+                            .reject {|word| !@stopwords.nil? && @stopwords.include?(word)}
     end
 
     def most_common_word_frequency

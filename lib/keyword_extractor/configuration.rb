@@ -1,10 +1,11 @@
 module KeywordExtractor
   class Configuration
-    attr_reader :term_frequency_strategy, :stopwords_file
+    attr_reader :term_frequency_strategy, :stopwords_file, :minimum_word_size
 
     def initialize
-      @term_frequency_strategy = :augmented
+      @term_frequency_strategy = :count
       @stopwords_file = 'stopwords/english.txt'
+      @minimum_word_size = 4
     end
 
     def stopwords_file=(file)
@@ -19,6 +20,11 @@ module KeywordExtractor
       end
 
       @term_frequency_strategy = strategy
+    end
+
+    def minimum_word_size=(size)
+      raise "minimum_word_size must be an Integer" unless size.is_a? Integer
+      @minimum_word_size = size
     end
   end
 end

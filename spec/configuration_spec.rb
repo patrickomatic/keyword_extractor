@@ -41,4 +41,17 @@ describe KeywordExtractor::Configuration do
       specify { expect { subject }.to raise_error }
     end
   end
+
+
+  describe "minimum_word_size=" do
+    let(:size) { 2 }
+    subject { configuration.minimum_word_size = size }
+
+    it { should == size }
+
+    context "with a non-numeric size" do
+      let(:size) { 5.0 }
+      specify { expect { subject }.to raise_error }
+    end
+  end
 end

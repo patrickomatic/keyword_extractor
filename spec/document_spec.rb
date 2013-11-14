@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe KeywordExtractor::Document do
   let(:text) { "this is a document" }
-  let(:document) { KeywordExtractor::Document.new(text) }
+  let(:minimum_word_size) { nil } 
+  let(:document) { KeywordExtractor::Document.new(text, nil, minimum_word_size) }
 
 
   describe "id" do
@@ -18,6 +19,13 @@ describe KeywordExtractor::Document do
     context "with various punctuation" do
       let(:text) { 'The; query, is "the brown cow".' }
       it { should == %w{the query is the brown cow} }
+    end
+
+    context "with words smaller than minimum_word_size" do
+      let(:minimum_word_size) { 4 } 
+      let(:text) { 'a b c wor' }
+
+      it { should == [] }
     end
   end
 

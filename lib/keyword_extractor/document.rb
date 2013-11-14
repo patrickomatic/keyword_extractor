@@ -24,9 +24,10 @@ module KeywordExtractor
 
 
     def tokenized_words(pattern=/\s+/)
-      @tokenized_words ||= @text.downcase.gsub(/[^a-z\s]+/, '')
-                            .split(pattern)
+      @tokenized_words ||= @text.downcase.split(pattern)
                             .reject(&@reject)
+                            .map {|word| word.gsub(/[^a-z\s]+/, '').strip}
+                            .reject {|word| word == ''}
                             .reject {|word| !@minimum_word_size.nil? && word.size < @minimum_word_size }
                             .reject {|word| !@stopwords.nil? && @stopwords.include?(word)}
     end

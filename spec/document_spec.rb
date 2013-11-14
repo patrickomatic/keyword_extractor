@@ -15,10 +15,12 @@ describe KeywordExtractor::Document do
 
   describe "tokenized_words" do
     subject { document.tokenized_words }
+
     it { should == %w{this is a document} }
 
     context "with various punctuation" do
       let(:text) { 'The; query, is "the brown cow".' }
+
       it { should == %w{the query is the brown cow} }
     end
 
@@ -33,21 +35,21 @@ describe KeywordExtractor::Document do
       let(:reject) { 'this' }
       let(:text) { "this is a thing" }
 
-      it { should = %w{thing} }
+      it { should == %w{is a thing} }
     end
 
     context "with a reject Array" do
       let(:reject) { ['this'] }
-      let(:text) { "this is a thing" }
+      let(:text) { "is a thing" }
 
-      it { should = %w{thing} }
+      it { should == %w{is a thing} }
     end
 
     context "with a reject Proc" do
       let(:reject) { lambda {|word| word =~ /^http:\/\//} }
       let(:text) { "http://bit.ly/asdf this is a thing" }
 
-      it { should = %w{this thing} }
+      it { should == %w{this is a thing} }
     end
   end
 

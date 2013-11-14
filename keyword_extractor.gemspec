@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'keyword_extractor'
-  s.version     = '0.0.4' 
+  s.version     = '0.0.5' 
   s.summary     = 'Extracts keywords from a corpus of documents'
   s.description = 'Uses TF-IDF to return a list of keywords extracted from the given documents'
   s.authors     = ['Patrick Carroll']

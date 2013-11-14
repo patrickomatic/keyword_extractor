@@ -46,7 +46,7 @@ describe KeywordExtractor::Document do
     end
 
     context "with a reject Proc" do
-      let(:reject) { lambda {|word| word =~ /^http:\/\//} }
+      let(:reject) { lambda {|word| word =~ /^https?:\/\//} }
       let(:text) { "http://bit.ly/asdf this is a thing" }
 
       it { should == %w{this is a thing} }

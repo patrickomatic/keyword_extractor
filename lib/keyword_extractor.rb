@@ -39,7 +39,7 @@ module KeywordExtractor
     # much that we can do but remove stopwords and set rank = 0
     if text.size == 1
       if text.first.include? '.'
-        text = text.first.split('.')
+        text = text.first.split(/\.\s+/)
       else
         document = Document.new(text.first, stopwords, configuration.minimum_word_size, configuration.reject)
         return {document => document.tokenized_words.collect {|word| Keyword.new(word, 0.0)}}
